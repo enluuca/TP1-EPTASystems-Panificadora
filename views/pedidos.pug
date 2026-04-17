@@ -1,0 +1,64 @@
+doctype html
+html(lang="es")
+    head
+        meta(charset="UTF-8")
+        meta(name="viewport", content="width=device-width, initial-scale=1.0")
+        title= title
+        link(rel="stylesheet", href="/css/style.css")
+    body
+        header
+            h1 La Espiga de Oro S.R.L.
+            h2 Gestión Central de Pedidos
+        
+        main
+            section.actions
+                a(href="/pedidos/nuevo" class="btn-primary") Cargar Nuevo Pedido
+                span  | 
+                a(href="/" class="btn-secondary") Volver al Inicio
+
+            hr
+
+            section.listado-pedidos
+                if pedidos && pedidos.length > 0
+                    div.grid-pedidos
+                        each p in pedidos
+                            article.pedido-card
+                                div.pedido-header
+                                    strong ID: #{p.id} 
+                                    span.fecha  - Fecha: #{p.fecha}
+                                
+                                div.pedido-info
+                                    p 
+                                        strong Sucursal: 
+                                        | #{p.sucursal}
+                                    p 
+                                        strong Estado actual: 
+                                        span(class=`tag-estado estado-${p.estado.toLowerCase().replace(/ /g, '-')}`) #{p.estado}
+                                
+                                div.pedido-detalle
+                                    p 
+                                        strong Productos solicitados:
+                                    ul
+                                        each prod in p.productos
+                                            li= prod
+
+                                div.pedido-actions
+                                    form(action=`/pedidos/actualizar-estado/${p.id}`, method="POST")
+                                        label(for="nuevoEstado") Cambiar Estado: 
+                                        select(name="nuevoEstado")
+                                            option(value="Pendiente" selected=p.estado==="Pendiente") Pendiente
+                                            option(value="En Producción" selected=p.estado==="En Producción") En Producción
+                                            option(value="Despachado" selected=p.estado==="Despachado") Despachado
+                                            option(value="Entregado" selected=p.estado==="Entregado") Entregado
+                                        button(type="submit" class="btn-update") Actualizar
+
+                                div.pedido-danger-zone
+                                    form(action=`/pedidos/eliminar/${p.id}`, method="POST" onsubmit="return confirm('¿Estás seguro?')")
+                                        button(type="submit" class="btn-delete") 🗑️ Eliminar
+                else
+                    div.no-data
+                        p No hay pedidos registrados en el sistema.
+
+        footer
+            hr
+            p &copy; 2026 La Espiga de Oro - Sistema de Gestión Industrial

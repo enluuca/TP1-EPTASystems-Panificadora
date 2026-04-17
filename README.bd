@@ -1,0 +1,22 @@
+Etapa 1: Entorno (Completado)
+1. Inicialización: Creación del package.json e instalación de dependencias (express, pug, nodemon). OK
+2. Setup de Git: Configuración del .gitignore para excluir node_modules y primer push al repo de GitHub. OK 
+3. Estructura Modular: Creación de las carpetas bajo el patrón MVC (Models, Views, Controllers) + Rutas y Data. OK
+4. Servidor Base: Configuración de app.js con el motor de plantillas Pug y middlewares para procesar datos de formularios. OK
+
+Etapa 2: Módulo 1 - Gestión de Pedidos (Completado)
+5. Modelo POO: Creación de la clase Pedido en models/Pedido.js con lógica para leer y escribir en pedidos.json. OK
+6. Persistencia JSON: Creación del archivo de datos para que la información no se pierda al reiniciar el servidor. OK
+7. Controlador y Rutas: Vinculación de las URLs (/pedidos, /pedidos/nuevo) con la lógica del negocio. OK
+8. Vistas Dinámicas: Creación de plantillas Pug para listar pedidos y el formulario de carga. OK
+
+Etapa 3: Módulo 2 - Catálogo de Productos (Lo que sigue)
+9. Modelo Producto: Crear una clase Producto para gestionar lo que la planta fabrica (pan, facturas, etc.).
+10. Persistencia de Stock: Crear productos.json para que el sistema sepa qué hay disponible.
+11. Integración de Módulos: Modificar el formulario de pedidos para que, en vez de escribir el producto, el usuario elija de una lista cargada desde el sistema.
+(Cuando se arme este módulo se debe tener en cuenta NombreProducto/Unidad de medida ej. kg / unidades. Para cuando se haga el pedido poder indicar nombre/unidad de medida/cantidad)
+
+Etapa 4: Entrega
+12. Rutas Dinámicas (Detalle): Crear la ruta /pedidos/:id para ver el detalle de un pedido específico o cambiarle el estado (ej: de "Pendiente" a "En Producción").
+13. Validaciones y Errores: Agregar lógica para que no se puedan enviar pedidos vacíos o con datos erróneos.
+14. Documentación: Armar el PDF con los roles del grupo y grabar el video explicando el código.

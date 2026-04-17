@@ -1,0 +1,21 @@
+doctype html
+html(lang="es")
+    head
+        meta(charset="UTF-8")
+        title= title
+        link(rel="stylesheet", href="/css/style.css")
+    body
+        h1 Cargar Nuevo Pedido - La Espiga de Oro
+        form(action="/pedidos/guardar", method="POST")
+            div
+                label(for="sucursal") Nombre de la Franquicia/Sucursal:
+                input(type="text", name="sucursal", required=true)
+            
+            div
+                label(for="productos") Productos (pan, facturas, etc - separar por coma):
+                input(type="text", name="productos", placeholder="Ej: Pan Francés, Facturas", required=true)
+            
+            button(type="submit") Enviar Pedido a Planta
+        
+        br
+        a(href="/pedidos") Cancelar y volver
