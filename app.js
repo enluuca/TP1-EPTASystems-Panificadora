@@ -6,6 +6,9 @@ const pedidosRoutes = require('./routes/pedidosRoutes');
 const app = express();
 const PORT = process.env.PORT || 3000;
 
+// Middleware para servir archivos estáticos (CSS, JS, imágenes)
+app.use(express.static('public'));
+
 // Configuración del Motor de Plantillas (Pug)
 app.set('view engine', 'pug');
 app.set('views', path.join(__dirname, 'views'));
@@ -23,7 +26,7 @@ app.get('/', (req, res) => {
 app.use('/pedidos', pedidosRoutes);
 
 // Capturar rutas no válidas (Error 404)
-app.use('*', (req, res) => {
+app.use((req, res) => {
     res.status(404).send('404 - Esa ruta no existe!');
 });
 

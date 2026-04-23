@@ -36,13 +36,22 @@ exports.getPedidos = (req, res) => {
 
 // 2. Mostrar el formulario de carga para crear un registro
 exports.getFormularioPedido = (req, res) => {
-    res.render('nuevo-pedido', { title: 'Cargar Nuevo Pedido' });
+    // Leemos los datos desde los archivos JSON mediante los Modelos
+    const clientes = Cliente.fetchAll();
+    const productos = Producto.fetchAll();
+
+    // Renderizamos la vista pasándole los datos para que arme las opciones
+    res.render('nuevo-pedido', { 
+        title: 'Cargar Nuevo Pedido',
+        clientes: clientes,       
+        productos: productos      
+    });
 };
 
 // 3. Recibir los datos del formulario y guardarlos (ALTA)
 exports.postGuardarPedido = (req, res) => {
     const { sucursal, productos } = req.body;
-    const listaProductos = productos.split(',').map(p => p.trim());
+    const listaProductos = Array.isArray(productos) ? productos : [productos];
 
     // Validación de referencias
     const clientes = Cliente.fetchAll();
@@ -54,13 +63,6 @@ exports.postGuardarPedido = (req, res) => {
 
     const nuevoPedido = new Pedido(Date.now(), sucursal, listaProductos);
     nuevoPedido.save();
-    res.redirect('/pedidos'); 
-};
-    
-    // Ejecutamos el método síncrono para guardar en el JSON
-    nuevoPedido.save();
-    
-    // Redirigimos al usuario nuevamente a la lista de pedidos
     res.redirect('/pedidos'); 
 };
 
