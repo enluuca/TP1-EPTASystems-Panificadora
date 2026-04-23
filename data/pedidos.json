@@ -1,1 +1,22 @@
-[]
+[
+  {
+    "id": 1776965429373,
+    "sucursal": "2",
+    "productos": [
+      "75",
+      "5"
+    ],
+    "estado": "Despachado",
+    "fecha": "23/4/2026"
+  },
+  {
+    "id": 1776965452374,
+    "sucursal": "2",
+    "productos": [
+      "75",
+      "2"
+    ],
+    "estado": "Pendiente",
+    "fecha": "23/4/2026"
+  }
+]
