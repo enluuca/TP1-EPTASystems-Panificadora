@@ -2,10 +2,40 @@ doctype html
 html(lang="es")
     head
         meta(charset="UTF-8")
-        title= title
+        title Inicio - La Espiga de Oro
         link(rel="stylesheet", href="/css/style.css")
+        style.
+            .home-container {
+                display: flex;
+                flex-direction: column;
+                align-items: center;
+                justify-content: center;
+                margin-top: 50px;
+            }
+            .menu-box {
+                background: white;
+                padding: 40px;
+                border-radius: 8px;
+                box-shadow: 0 4px 10px rgba(0,0,0,0.1);
+                text-align: center;
+                border-top: 5px solid #f1c40f;
+            }
+            .menu-box a {
+                display: block;
+                margin: 15px 0;
+            }
     body
-        h1 La Espiga de Oro
-        a(href="/pedidos/nuevo") Sistema de gestión de pedidos para sucursales y franquicias.
-        br
-        a(href="/pedidos") Gestión de pedidos.
+        header
+            h1 La Espiga de Oro S.R.L.
+            h2 Sistema Central de Gestión
+        
+        main.home-container
+            div.menu-box
+                h3 ¿Qué acción desea realizar?
+                p Seleccione un módulo para continuar:
+                
+                a.btn-primary(href="/pedidos") 📋 Ver Tablero de Pedidos
+                a.btn-primary(href="/pedidos/nuevo" style="background-color: #2ecc71;") ➕ Cargar Nuevo Pedido
+                
+        footer(style="text-align: center; margin-top: 50px; color: #7f8c8d;")
+            p &copy; 2026 EPTASystems - Trabajo Práctico Back End
