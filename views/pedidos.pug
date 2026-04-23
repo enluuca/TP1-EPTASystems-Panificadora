@@ -29,8 +29,8 @@ html(lang="es")
                                 
                                 div.pedido-info
                                     p 
-                                        strong Sucursal: 
-                                        | #{p.sucursal}
+                                        strong Cliente: 
+                                        | #{p.cliente.nombre}
                                     p 
                                         strong Estado actual: 
                                         span(class=`tag-estado estado-${p.estado.toLowerCase().replace(/ /g, '-')}`) #{p.estado}
@@ -39,11 +39,11 @@ html(lang="es")
                                     p 
                                         strong Productos solicitados:
                                     ul
-                                        each prod in p.productos
-                                            li= prod
+                                        each prod in p.productosDetalle
+                                            li #{prod.nombre}
 
                                 div.pedido-actions
-                                    form(action=`/pedidos/actualizar-estado/${p.id}`, method="POST")
+                                    form(action=`/pedidos/actualizar/${p.id}`, method="POST")
                                         label(for="nuevoEstado") Cambiar Estado: 
                                         select(name="nuevoEstado")
                                             option(value="Pendiente" selected=p.estado==="Pendiente") Pendiente

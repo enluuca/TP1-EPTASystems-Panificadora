@@ -6,16 +6,20 @@ html(lang="es")
         link(rel="stylesheet", href="/css/style.css")
     body
         h1 Cargar Nuevo Pedido - La Espiga de Oro
-        form(action="/pedidos/guardar", method="POST")
+        
+        //La ruta action debe ser /pedidos/nuevo para coincidir con nuestro router
+        form(action="/pedidos/nuevo", method="POST")
             div
-                label(for="sucursal") Nombre de la Franquicia/Sucursal:
-                input(type="text", name="sucursal", required=true)
+                //Pedimos el ID para que el controlador pueda cruzarlo con clientes.json
+                label(for="sucursal") ID de la Franquicia/Sucursal:
+                input(type="number", name="sucursal", placeholder="Ej: 1", required=true)
             
             div
-                label(for="productos") Productos (pan, facturas, etc - separar por coma):
-                input(type="text", name="productos", placeholder="Ej: Pan Francés, Facturas", required=true)
+                //Pedimos IDs separados por coma para cruzarlo con productos.json
+                label(for="productos") IDs de Productos (separar por coma):
+                input(type="text", name="productos", placeholder="Ej: 1, 2", required=true)
             
-            button(type="submit") Enviar Pedido a Planta
+            button(type="submit" class="btn-primary") Enviar Pedido a Planta
         
         br
-        a(href="/pedidos") Cancelar y volver
+        a(href="/pedidos" class="btn-secondary") Cancelar y volver
