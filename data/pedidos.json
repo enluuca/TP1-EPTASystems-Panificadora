@@ -1,20 +1,12 @@
 [
   {
-    "id": 1776965429373,
-    "sucursal": "2",
+    "id": 1776986957423,
+    "sucursal": "1",
     "productos": [
-      "75",
-      "5"
-    ],
-    "estado": "Despachado",
-    "fecha": "23/4/2026"
-  },
-  {
-    "id": 1776965452374,
-    "sucursal": "2",
-    "productos": [
-      "75",
-      "2"
+      "1",
+      "2",
+      "3",
+      "7"
     ],
     "estado": "Pendiente",
     "fecha": "23/4/2026"

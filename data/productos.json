@@ -8,5 +8,45 @@
     "id": "2",
     "nombre": "Pan Francés (kilo)",
     "precio": 3000
+  },
+  {
+    "id": "3",
+    "nombre": "Medialunas de manteca (Media docena)",
+    "precio": 6500
+  },
+  {
+    "id": "4",
+    "nombre": "Pan Francés (Medio kilo)",
+    "precio": 2000
+  },
+  {
+    "id": "5",
+    "nombre": "Pan Integral con Semillas (kilo)",
+    "precio": 4000
+  },
+  {
+    "id": "6",
+    "nombre": "Pebetes para sándwich (docena)",
+    "precio": 5000
+  },
+  {
+    "id": "7",
+    "nombre": "Tarta de ricota y jamón",
+    "precio": 3500
+  },
+  {
+    "id": "8",
+    "nombre": "Prepizzas (paquete x2)",
+    "precio": 2000
+  },
+  {
+    "id": "9",
+    "nombre": "Pan de miga (docena)",
+    "precio": 5000
+  },
+  {
+    "id": "10",
+    "nombre": "Bizcochitos (docena)",
+    "precio": 8000
   }
 ]

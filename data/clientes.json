@@ -1,0 +1,27 @@
+[
+  {
+    "id": "1",
+    "nombre": "Panadería El vigilante",
+    "direccion": "Av. Corrientes 123"
+  },
+  {
+    "id": "2",
+    "nombre": "Confitería La Dulce",
+    "direccion": "Av. Callao 456"
+  },
+  {
+    "id": "3",
+    "nombre": "Panadería Don evaristo",
+    "direccion": "Calle Florida 789"
+  },
+  {
+    "id": "4",
+    "nombre": "Cafetería Central",
+    "direccion": "Av. Santa Fe 1011"
+  },
+  {
+    "id": "5",
+    "nombre": "Panadería Bariloche",
+    "direccion": "Calle Lavalle 1213"
+  }
+]
