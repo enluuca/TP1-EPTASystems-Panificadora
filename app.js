@@ -27,9 +27,10 @@ app.use('/pedidos', pedidosRoutes);
 
 // Capturar rutas no válidas (Error 404)
 app.use((req, res) => {
-    res.status(404).send('404 - Esa ruta no existe!');
-});
 
+    res.status(404).send('404 - Esa ruta no existe en La Espiga de Oro!');
+
+});
 app.listen(PORT, () => {
     console.log(`Servidor corriendo en http://localhost:${PORT}`);
 });

@@ -51,18 +51,32 @@ exports.getFormularioPedido = (req, res) => {
 // 3. Recibir los datos del formulario y guardarlos (ALTA)
 exports.postGuardarPedido = (req, res) => {
     const { sucursal, productos } = req.body;
-    const listaProductos = Array.isArray(productos) ? productos : [productos];
 
-    // Validación de referencias
-    const clientes = Cliente.fetchAll();
-    const existeCliente = clientes.some(c => c.id == sucursal);
-    
-    if (!existeCliente) {
-        return res.status(400).send("Error: El ID de la sucursal no existe en la base de datos.");
+
+    // 1. Validamos que lleguen datos
+    if (!sucursal || !productos) {
+        return res.status(400).send("Faltan datos obligatorios.");
     }
 
+    // 2. Procesamos la lista de productos
+    const listaProductos = productos.split(',').map(p => p.trim());
+
+    // 3. Validación de referencias (Aseguramos que ambos sean String para comparar)
+    const clientes = Cliente.fetchAll();
+    const existeCliente = clientes.some(c => String(c.id) === String(sucursal).trim());
+    
+    if (!existeCliente) {
+        // Mostramos por consola qué ID está llegando para debuguear
+        console.log(`Error: El ID de sucursal "${sucursal}" no coincide con ninguno en el JSON.`);
+        return res.status(400).send(`Error: El ID de la sucursal "${sucursal}" no existe.`);
+    }
+
+    // 4. Creamos y guardamos el pedido (UNA SOLA VEZ)
     const nuevoPedido = new Pedido(Date.now(), sucursal, listaProductos);
-    nuevoPedido.save();
+
+    nuevoPedido.save(); 
+
+    // 5. Redirigimos (UNA SOLA VEZ)
     res.redirect('/pedidos'); 
 };
 

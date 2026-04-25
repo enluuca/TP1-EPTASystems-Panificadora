@@ -2,7 +2,7 @@ const fs = require('fs');
 const path = require('path');
 
 // Apunta al archivo JSON de clientes
-const p = path.join(__dirname, '..', 'data', 'clientes.json');
+const p = path.join(__dirname, '..', 'data', 'cliente.json');
 
 class Cliente {
     // Método síncrono para leer los datos
