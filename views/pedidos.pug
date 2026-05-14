@@ -24,13 +24,15 @@ html(lang="es")
                         each p in pedidos
                             article.pedido-card
                                 div.pedido-header
-                                    strong ID: #{p.id} 
-                                    span.fecha  - Fecha: #{p.fecha}
+                                    //- En MongoDB el ID es _id
+                                    strong ID: #{p._id} 
+                                    span.fecha  - Fecha: #{p.fecha.toLocaleDateString('es-AR')}
                                 
                                 div.pedido-info
                                     p 
                                         strong Cliente: 
-                                        | #{p.cliente.nombre}
+                                        //- Cambiamos p.cliente por p.sucursal (según el Schema)
+                                        | #{p.sucursal ? p.sucursal.nombre : 'Sin asignar'}
                                     p 
                                         strong Estado actual: 
                                         span(class=`tag-estado estado-${p.estado.toLowerCase().replace(/ /g, '-')}`) #{p.estado}
@@ -39,11 +41,13 @@ html(lang="es")
                                     p 
                                         strong Productos solicitados:
                                     ul
-                                        each prod in p.productosDetalle
+                                        //- Cambiamos p.productosDetalle por p.productos
+                                        each prod in p.productos
                                             li #{prod.nombre}
 
                                 div.pedido-actions
-                                    form(action=`/pedidos/actualizar/${p.id}`, method="POST")
+                                    //- Usamos p._id para las rutas de MongoDB
+                                    form(action=`/pedidos/actualizar/${p._id}`, method="POST")
                                         label(for="nuevoEstado") Cambiar Estado: 
                                         select(name="nuevoEstado")
                                             option(value="Pendiente" selected=p.estado==="Pendiente") Pendiente
@@ -53,7 +57,7 @@ html(lang="es")
                                         button(type="submit" class="btn-update") Actualizar
 
                                 div.pedido-danger-zone
-                                    form(action=`/pedidos/eliminar/${p.id}`, method="POST" onsubmit="return confirm('¿Estás seguro?')")
+                                    form(action=`/pedidos/eliminar/${p._id}`, method="POST" onsubmit="return confirm('¿Estás seguro?')")
                                         button(type="submit" class="btn-delete") 🗑️ Eliminar
                 else
                     div.no-data

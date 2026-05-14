@@ -1,20 +1,20 @@
-const fs = require('fs');
-const path = require('path');
+const mongoose = require('mongoose');
 
-// Apunta al archivo JSON de productos
-const p = path.join(__dirname, '..', 'data', 'productos.json');
-
-class Producto {
-    // Método síncrono para leer los datos
-    static fetchAll() {
-        try {
-            const fileContent = fs.readFileSync(p, 'utf-8');
-            if (fileContent.length === 0) return [];
-            return JSON.parse(fileContent);
-        } catch (e) {
-            return [];
-        }
+const productoSchema = new mongoose.Schema({
+    nombre: {
+        type: String,
+        required: [true, 'El nombre del producto es obligatorio'],
+        trim: true
+    },
+    precio: {
+        type: Number,
+        required: [true, 'El precio es obligatorio']
+    },
+    categoria: {
+        type: String,
+        enum: ['Panificados', 'Pastelería', 'Otros'],
+        default: 'Panificados'
     }
-}
+}, { versionKey: false });
 
-module.exports = Producto;
+module.exports = mongoose.model('Producto', productoSchema);

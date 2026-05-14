@@ -1,20 +1,18 @@
-const fs = require('fs');
-const path = require('path');
+const mongoose = require('mongoose');
 
-// Apunta al archivo JSON de clientes
-const p = path.join(__dirname, '..', 'data', 'cliente.json');
-
-class Cliente {
-    // Método síncrono para leer los datos
-    static fetchAll() {
-        try {
-            const fileContent = fs.readFileSync(p, 'utf-8');
-            if (fileContent.length === 0) return [];
-            return JSON.parse(fileContent);
-        } catch (e) {
-            return [];
-        }
+const clienteSchema = new mongoose.Schema({
+    nombre: {
+        type: String,
+        required: [true, 'El nombre de la sucursal es obligatorio'],
+        trim: true
+    },
+    direccion: {
+        type: String,
+        required: [true, 'La dirección es obligatoria']
+    },
+    telefono: {
+        type: String
     }
-}
+}, { versionKey: false }); // Quitamos el __v que agrega MongoDB por defecto
 
-module.exports = Cliente;
+module.exports = mongoose.model('Cliente', clienteSchema);
