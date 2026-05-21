@@ -1,0 +1,19 @@
+doctype html
+html(lang="es")
+    head
+        meta(charset="UTF-8")
+        meta(name="viewport" content="width=device-width, initial-scale=1.0")
+        title Error - La Espiga de Oro
+        link(rel="stylesheet" href="/css/style.css")
+    body
+        header
+            h1 La Espiga de Oro S.R.L.
+            h2 Error del Sistema
+        main
+            section(style="text-align: center; padding: 2rem;")
+                //- Usamos tu clase de zona de peligro para darle estilo al error
+                div.pedido-danger-zone
+                    h3 ¡Ups! Ha ocurrido un problema.
+                    p= mensaje
+                    br
+                    a.btn-secondary(href="/pedidos") Volver al listado seguro

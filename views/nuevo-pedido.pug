@@ -8,6 +8,14 @@ html(lang="es")
         link(rel="stylesheet", href="/css/style.css") 
     body
         header
+            if user
+                div(style="margin-bottom: 15px; background-color: #fff; padding: 10px; border-radius: 8px; box-shadow: 0 2px 4px rgba(0,0,0,0.05); display: flex; justify-content: space-between; align-items: center;")
+                    div
+                        a(href="/" style="font-weight: bold; margin-right: 15px; color: #3498db; text-decoration: none;") 🏠 Inicio
+                        a(href="/pedidos" style="font-weight: bold; color: #3498db; text-decoration: none;") 📋 Tablero
+                    div
+                        span(style="font-weight: bold; margin-right: 15px;") 👤 Usuario: #{user.username}
+                        a.btn-secondary(href="/logout" style="color: #e74c3c; border: 1px solid #e74c3c; padding: 5px 10px; border-radius: 4px;") Cerrar Sesión
             h1 La Espiga de Oro S.R.L.
             h2= title
 
