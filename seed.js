@@ -11,6 +11,7 @@ const seedDB = async () => {
         // Limpiamos datos viejos para no duplicar
         await Cliente.deleteMany({});
         await Producto.deleteMany({});
+        console.log('Base de datos limpiada...');
 
         // 1. Insertar Clientes (Sucursales)
         const clientesCargados = await Cliente.insertMany([
@@ -39,6 +40,7 @@ const seedDB = async () => {
         mongoose.connection.close();
     } catch (error) {
         console.error('❌ Error al sembrar:', error);
+        process.exit(1);
     }
 };
 
