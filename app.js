@@ -35,7 +35,9 @@ app.use('/pedidos', pedidosRoutes);
 
 // Manejo de Error 404 para rutas no definidas
 app.use((req, res) => {
-    res.status(404).send('404 - Esa ruta no existe en La Espiga de Oro!');
+    res.status(404).render('error', { 
+        mensaje: 'Error 404 - La página que estás buscando no existe en La Espiga de Oro.' 
+    });
 });
 
 // Inicio del servidor

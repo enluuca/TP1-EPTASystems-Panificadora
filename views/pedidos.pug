@@ -32,7 +32,7 @@ html(lang="es")
                                 div.pedido-header
                                     //- En MongoDB el ID es _id
                                     strong ID: #{p._id} 
-                                    span.fecha  - Fecha: #{p.createdAt.toLocaleDateString('es-AR')}
+                                    span.fecha  - Fecha: #{p.fecha ? p.fecha.toLocaleDateString('es-AR') : 'Sin fecha'}
                                 
                                 div.pedido-info
                                     p 
@@ -63,7 +63,7 @@ html(lang="es")
                                         button(type="submit" class="btn-update") Actualizar
 
                                 div.pedido-danger-zone
-                                    form(action=`/pedidos/eliminar/${p._id}`, method="POST" onsubmit="return confirm('¿Estás seguro?')")
+                                    form(action=`/pedidos/eliminar/${p._id}`, method="POST" onsubmit="return confirm('¿Estás seguro de que querés eliminar este pedido de forma permanente? Esta acción no se puede deshacer.')")
                                         button(type="submit" class="btn-delete") 🗑️ Eliminar
                 else
                     div.no-data
