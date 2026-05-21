@@ -5,7 +5,7 @@ const Producto = require('../models/Producto');
 // 1. Mostrar los pedidos (Cruzado con MongoDB)
 exports.getPedidos = async (req, res) => {
     try {
-        // .populate() reemplaza los .map() y .find() manuales que hacías antes.
+        // .populate() reemplaza los .map() y .find() manuales que haciamos antes.
         // Trae los datos reales de la colección 'Cliente' y 'Producto' basándose en los IDs.
         const pedidos = await Pedido.find()
             .populate('sucursal')
@@ -17,7 +17,9 @@ exports.getPedidos = async (req, res) => {
         });
     } catch (error) {
         console.error("Error al obtener pedidos:", error);
-        res.status(500).send("Error interno al cargar la lista de pedidos.");
+        res.status(500).render('error', { 
+            mensaje: "Error interno al cargar la lista de pedidos de MongoDB." 
+        });
     }
 };
 
@@ -34,7 +36,7 @@ exports.getFormularioPedido = async (req, res) => {
             productos: productos      
         });
     } catch (error) {
-        res.status(500).send("Error al cargar datos para el formulario.");
+        res.status(500).render('error', { mensaje: "Error al cargar datos para el formulario." });
     }
 };
 
@@ -43,9 +45,9 @@ exports.postGuardarPedido = async (req, res) => {
     try {
         const { sucursal, productos } = req.body;
 
-        // 1. Validación simple (Objetivo específico del TP)
+        // 1. Validación simple
         if (!sucursal || !productos) {
-            return res.status(400).send("Faltan datos obligatorios.");
+            return res.status(400).render('error', { mensaje: "Faltan datos obligatorios." });
         }
 
         // 2. Procesamos productos (Mongoose maneja el array de IDs directamente)
@@ -60,13 +62,13 @@ exports.postGuardarPedido = async (req, res) => {
             estado: 'Pendiente' // El Schema ya suele tener un default, pero lo aclaramos
         });
 
-        // 4. Guardado asincrónico (Objetivo: async/await)
+        // 4. Guardado asincrónico
         await nuevoPedido.save(); 
 
         res.redirect('/pedidos'); 
     } catch (error) {
         console.error("Error al guardar pedido:", error);
-        res.status(400).send("Error de validación: Asegúrese de que los IDs sean correctos.");
+        res.status(400).render('error', { mensaje: "Error de validación: Asegúrese de que los datos sean correctos." });
     }
 };
 
@@ -76,16 +78,16 @@ exports.postActualizarEstado = async (req, res) => {
         const pedidoId = req.params.id;
         const { nuevoEstado } = req.body;
 
-        // findByIdAndUpdate es el método estándar de Mongoose para esto
+         // findByIdAndUpdate es el método estándar de Mongoose para esto
         const actualizado = await Pedido.findByIdAndUpdate(pedidoId, { estado: nuevoEstado });
         
         if (!actualizado) {
-            return res.status(404).send("Pedido no encontrado.");
+            return res.status(404).render('error', { mensaje: "Pedido no encontrado." });
         }
         
         res.redirect('/pedidos');
     } catch (error) {
-        res.status(500).send("Error al actualizar el estado del pedido.");
+        res.status(500).render('error', { mensaje: "Error al actualizar el estado del pedido." });
     }
 };
 
@@ -98,6 +100,6 @@ exports.postEliminarPedido = async (req, res) => {
         
         res.redirect('/pedidos');
     } catch (error) {
-        res.status(500).send("Error al intentar eliminar el pedido.");
+        res.status(500).render('error', { mensaje: "Error al intentar eliminar el pedido." });
     }
 };
