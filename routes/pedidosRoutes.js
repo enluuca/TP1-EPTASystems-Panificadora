@@ -1,10 +1,6 @@
 const express = require('express');
 const router = express.Router();
 const pedidosController = require('../controllers/pedidosController');
-const authMiddleware = require('../middlewares/authMiddleware');
-
-// Aplicamos barrera de seguridad con JWT para toda la gestión de pedidos
-router.use(authMiddleware);
 
 // Rutas GET (Lectura)
 router.get('/', pedidosController.getPedidos);

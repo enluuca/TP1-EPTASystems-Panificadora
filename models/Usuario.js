@@ -1,8 +1,9 @@
 const mongoose = require('mongoose');
 
-// Modelo para autenticación del sistema administrativo.
+// Modelo básico de Usuario sin encriptación
 const usuarioSchema = new mongoose.Schema({
-    username: { type: String, required: true, unique: true, trim: true },
+    nombre: { type: String, required: true },
+    email: { type: String, required: true },
     password: { type: String, required: true }
 }, { versionKey: false });
 

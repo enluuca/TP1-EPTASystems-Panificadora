@@ -1,12 +1,10 @@
 require('dotenv').config(); // 1. Cargar variables de entorno
 const express = require('express');
 const path = require('path');
-const cookieParser = require('cookie-parser');
 const conectarDB = require('./config/db');
 const pedidosRoutes = require('./routes/pedidosRoutes');
 const authRoutes = require('./routes/authRoutes');
 const requestLogger = require('./middlewares/logger');
-const authMiddleware = require('./middlewares/authMiddleware');
 
 const app = express();
 const PORT = process.env.PORT || 3000;
@@ -22,11 +20,15 @@ app.set('views', path.join(__dirname, 'views'));
 app.use(express.static(path.join(__dirname, 'public'))); 
 app.use(express.json()); 
 app.use(express.urlencoded({ extended: true })); 
-app.use(cookieParser());
 app.use(requestLogger); 
 
-// Panel principal restaurado. Protegido por middleware.
-app.get('/', authMiddleware, (req, res) => {
+// Redirección inicial al login
+app.get('/', (req, res) => {
+    res.redirect('/login');
+});
+
+// Panel principal (Menú de inicio en nueva ruta para no pisar el login)
+app.get('/inicio', (req, res) => {
     res.render('index', { title: 'La Espiga de Oro - Sistema de Gestión' });
 });
 

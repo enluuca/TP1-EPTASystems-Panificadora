@@ -1,46 +1,51 @@
 const Usuario = require('../models/Usuario');
-const bcrypt = require('bcrypt');
-const jwt = require('jsonwebtoken');
 
-// Validación defensiva de seguridad
-if (!process.env.JWT_SECRET) {
-    throw new Error('FATAL ERROR: JWT_SECRET no está definido en el archivo .env');
-}
-
-// Render de vista login
-exports.getLogin = (req, res) => {
-    // Si ya está logueado, redirigimos al inicio
-    if (req.cookies.token) return res.redirect('/');
-    res.render('login', { title: 'Acceso Restringido - La Espiga de Oro' });
+// GET: Renderizar vista de registro
+exports.getRegistro = (req, res) => {
+    res.render('registro', { title: 'Registro de Usuario' });
 };
 
-// Verificación de credenciales, firma de JWT y seteo de HttpOnly Cookie.
-exports.postLogin = async (req, res) => {
+// GET: Renderizar vista de login
+exports.getLogin = (req, res) => {
+    res.render('login', { title: 'Iniciar Sesión' });
+};
+
+// POST: Procesar el registro (ALTA)
+exports.postRegistrar = async (req, res) => {
     try {
-        const { username, password } = req.body;
-        const user = await Usuario.findOne({ username });
-        
-        if (!user) {
-            return res.status(401).render('login', { error: 'Credenciales inválidas' });
+        const { nombre, email, password } = req.body;
+
+        if (!nombre || !email || !password) {
+            return res.status(400).render('error', { mensaje: 'Todos los campos son obligatorios para el registro.' });
         }
 
-        const match = await bcrypt.compare(password, user.password);
-        if (!match) {
-            return res.status(401).render('login', { error: 'Credenciales inválidas' });
-        }
+        // Instanciamos el modelo y guardamos la contraseña en texto plano
+        const nuevoUsuario = new Usuario({ nombre, email, password });
+        await nuevoUsuario.save();
 
-        const token = jwt.sign({ id: user._id, username: user.username }, process.env.JWT_SECRET, { expiresIn: '8h' });
-        
-        res.cookie('token', token, { httpOnly: true, secure: process.env.NODE_ENV === 'production' });
-        res.redirect('/');
+        res.redirect('/login');
     } catch (error) {
-        console.error("Error en login:", error);
-        res.status(500).render('error', { mensaje: 'Error al intentar iniciar sesión' });
+        console.error("Error en postRegistrar:", error);
+        res.status(500).render('error', { mensaje: 'Error interno al intentar registrar el usuario en la base de datos.' });
     }
 };
 
-// Destrucción de sesión por expiración de cookie
-exports.logout = (req, res) => {
-    res.clearCookie('token');
-    res.redirect('/login');
+// POST: Procesar el login (LECTURA SIMPLE)
+exports.postLogin = async (req, res) => {
+    try {
+        const { email, password } = req.body;
+
+        // Búsqueda exacta del documento coincidiendo email y password en texto plano
+        const usuario = await Usuario.findOne({ email: email, password: password });
+
+        if (!usuario) {
+            return res.status(401).render('login', { title: 'Iniciar Sesión', error: 'Credenciales inválidas. El usuario o la contraseña no coinciden.' });
+        }
+
+        // Autenticación exitosa (stateless): redirigimos al tablero principal
+        res.redirect('/inicio');
+    } catch (error) {
+        console.error("Error en postLogin:", error);
+        res.status(500).render('error', { mensaje: 'Error interno al intentar validar las credenciales.' });
+    }
 };
